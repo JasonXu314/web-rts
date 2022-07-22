@@ -1,2 +1,3 @@
 export * from './image.js';
-export * from './render-adapter.js';
+export * from './KeyCodes.js';
+export * from './RenderAdapter.js';

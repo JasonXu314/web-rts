@@ -1,2 +1,2 @@
-export * from './adapter-canvas';
-export * from './browser-image';
+export * from './BrowserImage.js';
+export * from './CanvasAdapter.js';

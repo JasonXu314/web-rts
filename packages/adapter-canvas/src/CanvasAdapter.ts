@@ -1,5 +1,5 @@
-import { AdapterEvents, DrawImageOptions, RenderAdapter } from '@web-rts/common';
-import { Image } from './browser-image';
+import { AdapterEvents, DrawImageOptions, KeyCodes, RenderAdapter } from '@web-rts/common';
+import { Image } from './BrowserImage.js';
 
 export class CanvasAdapter implements RenderAdapter {
 	private _listeners: {
@@ -7,7 +7,9 @@ export class CanvasAdapter implements RenderAdapter {
 	} = {
 		click: [],
 		drag: [],
-		'mouse-move': []
+		'mouse-move': [],
+		keydown: [],
+		keyup: []
 	};
 	private _mousePos: [number, number] | null = null;
 	private _dragStart: [number, number] | null = null;
@@ -15,6 +17,9 @@ export class CanvasAdapter implements RenderAdapter {
 	private _mouseDown: boolean = false;
 
 	constructor(private ctx: CanvasRenderingContext2D) {
+		ctx.canvas.tabIndex = 0;
+		ctx.canvas.style.outline = 'none';
+
 		ctx.canvas.addEventListener('mousedown', (e) => {
 			this._mouseDown = true;
 			this._dragStart = [this._toEngineX(e.offsetX), this._toEngineY(e.offsetY)];
@@ -45,6 +50,30 @@ export class CanvasAdapter implements RenderAdapter {
 					})
 				);
 			}
+		});
+
+		ctx.canvas.addEventListener('keydown', (evt) => {
+			const key = evt.key.toLowerCase() as KeyCodes;
+
+			if (key.toLowerCase() !== 'j') {
+				evt.preventDefault();
+			}
+
+			if (!evt.repeat) {
+				// console.log(key, 'down');
+				this._listeners.keydown.forEach((listener) => listener({ key }));
+			}
+		});
+
+		ctx.canvas.addEventListener('keyup', (evt) => {
+			const key = evt.key.toLowerCase() as KeyCodes;
+
+			if (key.toLowerCase() !== 'j') {
+				evt.preventDefault();
+			}
+
+			// console.log(key, 'up');
+			this._listeners.keyup.forEach((listener) => listener({ key }));
 		});
 
 		const movelistener = (e: MouseEvent) => {

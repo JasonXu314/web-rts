@@ -1,9 +1,12 @@
-import { DrawableImage } from './image';
+import { DrawableImage } from './image.js';
+import { KeyCodes } from './KeyCodes.js';
 
 export interface AdapterEvents {
 	click: { x: number; y: number };
 	drag: { start: [number, number]; end: [number, number] };
 	'mouse-move': { start: [number, number]; end: [number, number]; delta: [number, number] };
+	keydown: { key: KeyCodes };
+	keyup: { key: KeyCodes };
 }
 
 export interface RenderAdapter {

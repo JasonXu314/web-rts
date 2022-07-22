@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { CanvasAdapter, Image } from '@web-rts/adapter-canvas';
-	import { Engine } from '@web-rts/engine';
+	import { AssetSprite, Engine } from '@web-rts/engine';
 	import { onMount } from 'svelte';
+	import { TestSprite } from '../lib/TestSprite';
 
 	let canvas: HTMLCanvasElement;
 
@@ -14,6 +15,11 @@
 		const engine = new Engine(adapter, { cursor: new Image('/cursor.png'), background: new Image('/checkerboard.jpg') });
 
 		(window as any).engine = engine;
+		(window as any).AssetSprite = AssetSprite;
+
+		engine.register(new TestSprite());
+
+		engine.run();
 	});
 </script>
 
