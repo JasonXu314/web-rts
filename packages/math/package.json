@@ -1,0 +1,17 @@
+{
+	"name": "@web-rts/math",
+	"version": "1.0.0",
+	"main": "dist",
+	"files": [
+		"dist/**/*"
+	],
+	"scripts": {
+		"build": "tsc",
+		"dev": "tsc --watch"
+	},
+	"license": "MIT",
+	"devDependencies": {
+		"typescript": "^4.7.4",
+		"@web-rts/tsconfig": "*"
+	}
+}
